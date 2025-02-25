@@ -1,1 +1,88 @@
 /* You can add global styles to this file, and also import other style files */
+@use "tailwindcss";
+
+// avant on aurais mis ceci dans le fichier styles.scss
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+// on conseille dans la doc officiel :
+// dans le fichier css et non scss ! @import "tailwindcss";
+// mais nous dans un scss moderne nous utilisons @use
+// https://sass-lang.com/documentation/breaking-changes/import/
+
+// Variables
+:root {
+  --header-height: 4rem;
+}
+
+// new way to define variables in tailwind v4 , without tailwindcss.config.(js/ts)
+// https://tailwindcss.com/docs/theme
+
+/* Namespace	Utility classes
+--color-*	Color utilities like bg-red-500, text-sky-300, and many more
+--font-*	Font family utilities like font-sans
+--text-*	Font size utilities like text-xl
+--font-weight-*	Font weight utilities like font-bold
+--tracking-*	Letter spacing utilities like tracking-wide
+--leading-*	Line height utilities like leading-tight
+--breakpoint-*	Responsive breakpoint variants like sm:*
+--container-*	Container query variants like @sm:* and size utilities like max-w-md
+--spacing-*	Spacing and sizing utilities like px-4, max-h-16, and many more
+--radius-*	Border radius utilities like rounded-sm
+--shadow-*	Box shadow utilities like shadow-md
+--inset-shadow-*	Inset box shadow utilities like inset-shadow-xs
+--drop-shadow-*	Drop shadow filter utilities like drop-shadow-md
+--blur-*	Blur filter utilities like blur-md
+--perspective-*	Perspective utilities like perspective-near
+--aspect-*	Aspect ratio utilities like aspect-video
+--ease-*	Transition timing function utilities like ease-out
+--animate-*	Animation utilities like animate-spin */
+
+@theme {
+  --color-primary: #007bff;
+  --color-secondary: #6c757d;
+}
+
+/* dans ce cas on peut donc utiliser en suite text-primary par exemple pour 
+combiner text-[] de tailwind et la couleur primary de notre theme dans le html */
+
+// Styles globaux
+body {
+  @apply bg-gray-50 text-gray-900 min-h-screen;
+}
+
+// Composants réutilisables
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md transition-colors duration-200 font-medium;
+
+    &-primary {
+      @apply bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300;
+    }
+
+    &-secondary {
+      @apply bg-gray-600 text-white hover:bg-gray-700 disabled:bg-gray-300;
+    }
+  }
+
+  .input-field {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+           focus:border-blue-500 focus:ring focus:ring-blue-200;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-100 
+           hover:shadow-md transition-shadow duration-200;
+  }
+}
+
+// avant on aurais mis ceci dans le fichier styles.scss
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+// on conseille dans la doc officiel :
+// dans le fichier css et non scss ! @import "tailwindcss";
+// mais nous dans un scss moderne nous utilisons @use
+// https://sass-lang.com/documentation/breaking-changes/import/
