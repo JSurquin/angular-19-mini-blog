@@ -1,7 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ArticleService } from '../../services/article.service';
+import {
+  ArticleService,
+  Article,
+} from '@features/articles/services/article.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -75,6 +78,8 @@ export class ArticleListComponent {
   // Version Observable
   articles$ = this.articleService.articles$;
 
-  // Version Signal
-  articles = toSignal(this.articles$, { initialValue: [] });
+  // Version Signal - Correction du typage
+  articles = toSignal(this.articles$, {
+    initialValue: [] as Article[],
+  });
 }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ArticleService } from '../../services/article.service';
+import { ArticleService } from '@features/articles/services/article.service';
 import { switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 

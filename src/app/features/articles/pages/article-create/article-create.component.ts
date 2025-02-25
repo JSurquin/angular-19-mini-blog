@@ -7,8 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ArticleService } from '../../services/article.service';
-import { NotificationService } from '../../../../core/services/notification.service';
+import { ArticleService } from '@features/articles/services/article.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-article-create',
