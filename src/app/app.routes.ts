@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -8,14 +9,48 @@ export const routes: Routes = [
   },
   {
     path: 'articles',
-    loadChildren: () =>
-      import('./features/articles/articles.routes').then(
-        (m) => m.ARTICLES_ROUTES
-      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './features/articles/pages/article-list/article-list.component'
+          ).then((m) => m.ArticleListComponent),
+      },
+      {
+        path: 'new',
+        loadComponent: () =>
+          import(
+            './features/articles/pages/article-create/article-create.component'
+          ).then((m) => m.ArticleCreateComponent),
+        canActivate: [authGuard],
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import(
+            './features/articles/pages/article-detail/article-detail.component'
+          ).then((m) => m.ArticleDetailComponent),
+      },
+    ],
   },
   {
     path: 'auth',
-    loadChildren: () =>
-      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+    children: [
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./features/auth/pages/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./features/auth/pages/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
+      },
+    ],
   },
 ];

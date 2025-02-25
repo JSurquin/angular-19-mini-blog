@@ -8,12 +8,11 @@ import { HeaderComponent } from './core/components/header/header.component';
   imports: [RouterOutlet, HeaderComponent],
   template: `
     <app-header />
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 mt-16">
       <router-outlet />
     </main>
   `,
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'blog-pedagogique';
+  title = 'Blog Angular';
 }

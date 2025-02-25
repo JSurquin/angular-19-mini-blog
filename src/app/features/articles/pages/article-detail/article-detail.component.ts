@@ -1,35 +1,54 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
+import { switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
-    <div class="container mx-auto p-4">
-      <!-- Exemple avec Observable -->
-      @if (article$ | async; as article) {
-      <article class="prose lg:prose-xl">
-        <h1>{{ article.title }}</h1>
-        <p class="text-gray-600">Par {{ article.author }}</p>
-        <div>{{ article.content }}</div>
-      </article>
-      }
+    <!-- Version Observable -->
+    @if (article$ | async; as article) {
+    <article class="max-w-3xl mx-auto">
+      <div class="mb-8">
+        <a routerLink="/articles" class="text-blue-600 hover:text-blue-800">
+          ← Retour aux articles
+        </a>
+      </div>
+      <h1 class="text-4xl font-bold mb-4">{{ article.title }}</h1>
+      <div class="flex items-center mb-8 text-gray-600">
+        <span>Par {{ article.author }}</span>
+        <span class="mx-2">•</span>
+        <span>{{ article.createdAt | date }}</span>
+      </div>
+      <div class="prose max-w-none">
+        {{ article.content }}
+      </div>
+    </article>
+    }
 
-      <!-- Exemple avec Signal -->
-      @if (article(); as article) {
-      <article class="prose lg:prose-xl mt-8">
-        <h2>Version Signal</h2>
-        <h1>{{ article.title }}</h1>
-        <p class="text-gray-600">Par {{ article.author }}</p>
-        <div>{{ article.content }}</div>
-      </article>
-      }
-    </div>
+    <!-- Version Signal -->
+    @if (article(); as article) {
+    <article class="max-w-3xl mx-auto">
+      <div class="mb-8">
+        <a routerLink="/articles" class="text-blue-600 hover:text-blue-800">
+          ← Retour aux articles
+        </a>
+      </div>
+      <h1 class="text-4xl font-bold mb-4">{{ article.title }}</h1>
+      <div class="flex items-center mb-8 text-gray-600">
+        <span>Par {{ article.author }}</span>
+        <span class="mx-2">•</span>
+        <span>{{ article.createdAt | date }}</span>
+      </div>
+      <div class="prose max-w-none">
+        {{ article.content }}
+      </div>
+    </article>
+    }
   `,
 })
 export class ArticleDetailComponent {
@@ -38,17 +57,9 @@ export class ArticleDetailComponent {
 
   // Version Observable
   article$ = this.route.params.pipe(
-    map((params) => parseInt(params['id'])),
-    switchMap((id) => this.articleService.getArticleById$(id))
+    switchMap((params) => this.articleService.getArticleById$(+params['id']))
   );
 
   // Version Signal
-  private articleId = toSignal(
-    this.route.params.pipe(map((params) => parseInt(params['id'])))
-  );
-
-  article = computed(() => {
-    const id = this.articleId();
-    return id ? this.articleService.getArticleById(id) : null;
-  });
+  article = toSignal(this.article$);
 }
