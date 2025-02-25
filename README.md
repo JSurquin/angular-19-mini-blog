@@ -8,6 +8,10 @@
 
 Cette application est un blog pédagogique développé avec Angular 18/19, conçu pour démontrer les meilleures pratiques et les fonctionnalités modernes d'Angular.
 
+### Démo
+
+Voir la démo en ligne : [https://angular-19-mini-blog.vercel.app/](https://angular-19-mini-blog.vercel.app/)
+
 ### Fonctionnalités Principales
 
 - Gestion d'articles (création, lecture)
@@ -76,6 +80,10 @@ src/
 ### About
 
 This is an educational blog application developed with Angular 18/19, designed to demonstrate best practices and modern Angular features.
+
+### Demo
+
+See the live demo: [https://angular-19-mini-blog.vercel.app/](https://angular-19-mini-blog.vercel.app/)
 
 ### Main Features
 
