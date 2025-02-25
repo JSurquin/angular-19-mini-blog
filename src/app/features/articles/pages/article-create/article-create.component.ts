@@ -7,7 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ArticleService } from '../../services/article.service';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 @Component({
   selector: 'app-article-create',
@@ -80,30 +81,34 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ArticleCreateComponent {
   private fb = inject(FormBuilder);
-  private http = inject(HttpClient);
   private router = inject(Router);
+  private articleService = inject(ArticleService);
+  private notificationService = inject(NotificationService);
 
+  // Formulaire réactif pour la création d'article
   articleForm: FormGroup = this.fb.group({
-    title: ['', [Validators.required]],
-    content: ['', [Validators.required]],
+    title: ['', [Validators.required, Validators.minLength(3)]],
+    content: ['', [Validators.required, Validators.minLength(10)]],
   });
 
   onSubmit() {
     if (this.articleForm.valid) {
-      // Utilisation de JSONPlaceholder pour simuler la création
-      this.http
-        .post('https://jsonplaceholder.typicode.com/posts', {
-          title: this.articleForm.value.title,
-          body: this.articleForm.value.content,
-          userId: 1,
-        })
-        .subscribe({
-          next: () => {
-            // Redirection vers la liste des articles après création
-            this.router.navigate(['/articles']);
-          },
-          error: (error) => console.error('Erreur lors de la création:', error),
-        });
+      this.articleService.createArticle$(this.articleForm.value).subscribe({
+        next: () => {
+          this.notificationService.success('Article créé avec succès !');
+          this.router.navigate(['/articles']);
+        },
+        error: (error) => {
+          console.error('Erreur lors de la création:', error);
+          this.notificationService.error(
+            "Erreur lors de la création de l'article"
+          );
+        },
+      });
+    } else {
+      this.notificationService.error(
+        'Veuillez corriger les erreurs du formulaire'
+      );
     }
   }
 }
