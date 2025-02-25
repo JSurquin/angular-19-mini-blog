@@ -1,59 +1,166 @@
-# MiniBlog
+# Blog Angular - Application Pédagogique / Educational Blog Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
+[English version below](#english-version)
 
-## Development server
+## Version Française
 
-To start a local development server, run:
+### À Propos
+
+Cette application est un blog pédagogique développé avec Angular 18/19, conçu pour démontrer les meilleures pratiques et les fonctionnalités modernes d'Angular.
+
+### Fonctionnalités Principales
+
+- Gestion d'articles (création, lecture)
+- Authentification utilisateur
+- Comparaison Signals vs Observables
+- Notifications système
+- Architecture modulaire et scalable
+
+### Technologies Utilisées
+
+- Angular 18/19
+- RxJS & Signals
+- TailwindCSS
+- Angular Animations
+
+### Concepts Démontrés
+
+1. **Gestion d'État**
+
+   - Utilisation des Signals
+   - Gestion des Observables
+   - Comparaison des deux approches
+
+2. **Architecture**
+
+   - Lazy Loading
+   - Composants autonomes
+   - Services injectables
+   - Gardes de route
+
+3. **UI/UX**
+   - Composants réutilisables
+   - Système de notification
+   - Animations
+   - Design responsive
+
+### Installation
 
 ```bash
+# Cloner le repository
+git clone [url-du-repo]
+
+# Installer les dépendances
+npm install
+
+# Lancer l'application
+npm start
+```
+
+### Structure du Projet
+
+```
+src/
+├── app/
+│   ├── core/           # Services, gardes et composants core
+│   ├── features/       # Modules fonctionnels
+│   └── shared/        # Composants et utilitaires partagés
+├── assets/            # Ressources statiques
+└── styles/           # Styles globaux
+```
+
+---
+
+## English Version
+
+### About
+
+This is an educational blog application developed with Angular 18/19, designed to demonstrate best practices and modern Angular features.
+
+### Main Features
+
+- Article management (creation, reading)
+- User authentication
+- Signals vs Observables comparison
+- System notifications
+- Modular and scalable architecture
+
+### Technologies Used
+
+- Angular 18/19
+- RxJS & Signals
+- TailwindCSS
+- Angular Animations
+
+### Demonstrated Concepts
+
+1. **State Management**
+
+   - Signals usage
+   - Observables management
+   - Comparison of both approaches
+
+2. **Architecture**
+
+   - Lazy Loading
+   - Standalone components
+   - Injectable services
+   - Route guards
+
+3. **UI/UX**
+   - Reusable components
+   - Notification system
+   - Animations
+   - Responsive design
+
+### Installation
+
+```bash
+# Clone the repository
+git clone [repo-url]
+
+# Install dependencies
+npm install
+
+# Start the application
+npm start
+```
+
+### Project Structure
+
+```
+src/
+├── app/
+│   ├── core/           # Core services, guards and components
+│   ├── features/       # Feature modules
+│   └── shared/        # Shared components and utilities
+├── assets/            # Static resources
+└── styles/           # Global styles
+```
+
+### Development Commands
+
+```bash
+# Development server
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+# Build
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+# Tests
 ng test
 ```
 
-## Running end-to-end tests
+### API Documentation
 
-For end-to-end (e2e) testing, run:
+The application uses JSONPlaceholder to simulate a REST API:
 
-```bash
-ng e2e
-```
+- GET /posts
+- GET /posts/:id
+- POST /posts
+- PUT /posts/:id
+- DELETE /posts/:id
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Developed with ❤️ by Jimmylan - Andromed
