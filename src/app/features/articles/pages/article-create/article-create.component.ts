@@ -15,67 +15,115 @@ import { NotificationService } from '@core/services/notification.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   template: `
-    <div class="max-w-3xl mx-auto">
-      <div class="mb-8">
-        <a routerLink="/articles" class="text-blue-600 hover:text-blue-800">
-          ← Retour aux articles
-        </a>
-      </div>
-
-      <h1 class="text-3xl font-bold text-gray-900 mb-6">
-        Créer un nouvel article
-      </h1>
-
-      <form [formGroup]="articleForm" (ngSubmit)="onSubmit()" class="space-y-6">
-        <div>
-          <label for="title" class="block text-sm font-medium text-gray-700">
-            Titre
-          </label>
-          <input
-            type="text"
-            id="title"
-            formControlName="title"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
-          />
-          @if (articleForm.get('title')?.errors?.['required'] &&
-          articleForm.get('title')?.touched) {
-          <p class="mt-1 text-sm text-red-600">Le titre est requis</p>
-          }
-        </div>
-
-        <div>
-          <label for="content" class="block text-sm font-medium text-gray-700">
-            Contenu
-          </label>
-          <textarea
-            id="content"
-            formControlName="content"
-            rows="8"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
-          ></textarea>
-          @if (articleForm.get('content')?.errors?.['required'] &&
-          articleForm.get('content')?.touched) {
-          <p class="mt-1 text-sm text-red-600">Le contenu est requis</p>
-          }
-        </div>
-
-        <div class="flex justify-end space-x-4">
-          <button
-            type="button"
+    <div class="container mx-auto px-4 py-12">
+      <div class="mx-auto max-w-3xl">
+        <!-- Navigation -->
+        <div class="mb-8">
+          <a
             routerLink="/articles"
-            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            class="group inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
           >
-            Annuler
-          </button>
-          <button
-            type="submit"
-            [disabled]="articleForm.invalid"
-            class="btn btn-primary"
-          >
-            Publier l'article
-          </button>
+            <svg
+              class="h-5 w-5 transition-transform group-hover:-translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Retour aux articles
+          </a>
         </div>
-      </form>
+
+        <!-- En-tête -->
+        <h1
+          class="mb-8 bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-4xl font-bold text-transparent"
+        >
+          Créer un nouvel article
+        </h1>
+
+        <!-- Formulaire -->
+        <form
+          [formGroup]="articleForm"
+          (ngSubmit)="onSubmit()"
+          class="space-y-8"
+        >
+          <!-- Titre -->
+          <div class="space-y-2">
+            <label for="title" class="block text-sm font-medium text-slate-700">
+              Titre de l'article
+            </label>
+            <input
+              type="text"
+              id="title"
+              formControlName="title"
+              class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+              placeholder="Entrez le titre de votre article"
+            />
+            @if (articleForm.get('title')?.errors?.['required'] &&
+            articleForm.get('title')?.touched) {
+            <p class="text-sm text-red-600">Le titre est requis</p>
+            }
+          </div>
+
+          <!-- Contenu -->
+          <div class="space-y-2">
+            <label
+              for="content"
+              class="block text-sm font-medium text-slate-700"
+            >
+              Contenu de l'article
+            </label>
+            <textarea
+              id="content"
+              formControlName="content"
+              rows="12"
+              class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+              placeholder="Rédigez votre article ici..."
+            ></textarea>
+            @if (articleForm.get('content')?.errors?.['required'] &&
+            articleForm.get('content')?.touched) {
+            <p class="text-sm text-red-600">Le contenu est requis</p>
+            }
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center justify-end gap-4">
+            <button
+              type="button"
+              routerLink="/articles"
+              class="rounded-full px-6 py-3 text-slate-600 hover:bg-slate-50"
+            >
+              Annuler
+            </button>
+            <button
+              type="submit"
+              [disabled]="articleForm.invalid"
+              class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3 text-white shadow-lg transition-all hover:translate-y-[-2px] hover:shadow-xl disabled:opacity-50 disabled:hover:translate-y-0"
+            >
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+              Publier l'article
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   `,
 })

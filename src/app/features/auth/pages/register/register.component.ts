@@ -16,143 +16,176 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="container mx-auto p-4">
-      <div class="max-w-md mx-auto">
-        <h2 class="text-2xl font-bold mb-6">Inscription</h2>
-
-        <!-- Version Observable avec Reactive Forms -->
-        <form
-          [formGroup]="registerForm"
-          (ngSubmit)="onSubmit()"
-          class="mb-8 space-y-4"
-        >
-          <h3 class="text-xl font-semibold">Version Observable</h3>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Nom d'utilisateur
-            </label>
-            <input
-              type="text"
-              formControlName="username"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            @if (registerForm.get('username')?.errors?.['required'] &&
-            registerForm.get('username')?.touched) {
-            <p class="text-red-500 text-sm mt-1">
-              Le nom d'utilisateur est requis
+    <div
+      class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-blue-50 to-white py-12"
+    >
+      <div class="container mx-auto px-4">
+        <div class="mx-auto max-w-md">
+          <!-- En-tête -->
+          <div class="text-center">
+            <h1 class="mb-2 text-3xl font-bold text-slate-900">Inscription</h1>
+            <p class="mb-8 text-slate-600">
+              Créez votre compte pour commencer à publier
             </p>
-            }
           </div>
 
+          <!-- Version Observable -->
+          <div class="mb-12">
+            <h2 class="mb-6 text-xl font-semibold text-slate-900">
+              Version Observable
+            </h2>
+            <form
+              [formGroup]="registerForm"
+              (ngSubmit)="onSubmit()"
+              class="space-y-6"
+            >
+              <!-- Username -->
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-slate-700">
+                  Nom d'utilisateur
+                </label>
+                <input
+                  type="text"
+                  formControlName="username"
+                  class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  placeholder="votre_nom"
+                />
+                @if (registerForm.get('username')?.errors?.['required'] &&
+                registerForm.get('username')?.touched) {
+                <p class="text-sm text-red-600">
+                  Le nom d'utilisateur est requis
+                </p>
+                }
+              </div>
+
+              <!-- Email -->
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-slate-700">
+                  Adresse email
+                </label>
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  placeholder="vous@exemple.com"
+                />
+                @if (registerForm.get('email')?.errors?.['required'] &&
+                registerForm.get('email')?.touched) {
+                <p class="text-sm text-red-600">L'email est requis</p>
+                } @if (registerForm.get('email')?.errors?.['email'] &&
+                registerForm.get('email')?.touched) {
+                <p class="text-sm text-red-600">Format d'email invalide</p>
+                }
+              </div>
+
+              <!-- Password -->
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-slate-700">
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  formControlName="password"
+                  class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  placeholder="••••••••"
+                />
+                @if (registerForm.get('password')?.errors?.['required'] &&
+                registerForm.get('password')?.touched) {
+                <p class="text-sm text-red-600">Le mot de passe est requis</p>
+                } @if (registerForm.get('password')?.errors?.['minlength'] &&
+                registerForm.get('password')?.touched) {
+                <p class="text-sm text-red-600">
+                  Le mot de passe doit contenir au moins 6 caractères
+                </p>
+                }
+              </div>
+
+              <button
+                type="submit"
+                [disabled]="registerForm.invalid"
+                class="w-full rounded-full bg-gradient-to-r from-blue-600 to-violet-600 py-3 text-white shadow-lg transition-all hover:translate-y-[-2px] hover:shadow-xl disabled:opacity-50 disabled:hover:translate-y-0"
+              >
+                Créer mon compte
+              </button>
+            </form>
+          </div>
+
+          <!-- Version Signal -->
           <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              formControlName="email"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            @if (registerForm.get('email')?.errors?.['required'] &&
-            registerForm.get('email')?.touched) {
-            <p class="text-red-500 text-sm mt-1">L'email est requis</p>
-            } @if (registerForm.get('email')?.errors?.['email'] &&
-            registerForm.get('email')?.touched) {
-            <p class="text-red-500 text-sm mt-1">Format d'email invalide</p>
-            }
+            <h2 class="mb-6 text-xl font-semibold text-slate-900">
+              Version Signal
+            </h2>
+            <form (ngSubmit)="onSignalSubmit()" class="space-y-6">
+              <!-- Username -->
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-slate-700">
+                  Nom d'utilisateur
+                </label>
+                <input
+                  type="text"
+                  [formControl]="usernameControl"
+                  class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  placeholder="votre_nom"
+                />
+                @if (usernameControl.errors?.['required'] &&
+                usernameControl.touched) {
+                <p class="text-sm text-red-600">
+                  Le nom d'utilisateur est requis
+                </p>
+                }
+              </div>
+
+              <!-- Email -->
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-slate-700">
+                  Adresse email
+                </label>
+                <input
+                  type="email"
+                  [formControl]="emailControl"
+                  class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  placeholder="vous@exemple.com"
+                />
+                @if (emailControl.errors?.['required'] && emailControl.touched)
+                {
+                <p class="text-sm text-red-600">L'email est requis</p>
+                } @if (emailControl.errors?.['email'] && emailControl.touched) {
+                <p class="text-sm text-red-600">Format d'email invalide</p>
+                }
+              </div>
+
+              <!-- Password -->
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-slate-700">
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  [formControl]="passwordControl"
+                  class="w-full rounded-lg border border-slate-200 px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  placeholder="••••••••"
+                />
+                @if (passwordControl.errors?.['required'] &&
+                passwordControl.touched) {
+                <p class="text-sm text-red-600">Le mot de passe est requis</p>
+                } @if (passwordControl.errors?.['minlength'] &&
+                passwordControl.touched) {
+                <p class="text-sm text-red-600">
+                  Le mot de passe doit contenir au moins 6 caractères
+                </p>
+                }
+              </div>
+
+              <button
+                type="submit"
+                [disabled]="signalForm.invalid"
+                class="w-full rounded-full bg-gradient-to-r from-blue-600 to-violet-600 py-3 text-white shadow-lg transition-all hover:translate-y-[-2px] hover:shadow-xl disabled:opacity-50 disabled:hover:translate-y-0"
+              >
+                Créer mon compte (Signal)
+              </button>
+            </form>
           </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              formControlName="password"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            @if (registerForm.get('password')?.errors?.['required'] &&
-            registerForm.get('password')?.touched) {
-            <p class="text-red-500 text-sm mt-1">Le mot de passe est requis</p>
-            } @if (registerForm.get('password')?.errors?.['minlength'] &&
-            registerForm.get('password')?.touched) {
-            <p class="text-red-500 text-sm mt-1">
-              Le mot de passe doit contenir au moins 6 caractères
-            </p>
-            }
-          </div>
-
-          <button
-            type="submit"
-            [disabled]="registerForm.invalid"
-            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
-          >
-            S'inscrire
-          </button>
-        </form>
-
-        <!-- Version Signal Forms -->
-        <form (ngSubmit)="onSignalSubmit()" class="space-y-4">
-          <h3 class="text-xl font-semibold">Version Signal</h3>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Nom d'utilisateur
-            </label>
-            <input
-              type="text"
-              [formControl]="usernameControl"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            @if (usernameControl.errors?.['required'] &&
-            usernameControl.touched) {
-            <p class="text-red-500 text-sm mt-1">
-              Le nom d'utilisateur est requis
-            </p>
-            }
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              [formControl]="emailControl"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            @if (emailControl.errors?.['required'] && emailControl.touched) {
-            <p class="text-red-500 text-sm mt-1">L'email est requis</p>
-            } @if (emailControl.errors?.['email'] && emailControl.touched) {
-            <p class="text-red-500 text-sm mt-1">Format d'email invalide</p>
-            }
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              [formControl]="passwordControl"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            @if (passwordControl.errors?.['required'] &&
-            passwordControl.touched) {
-            <p class="text-red-500 text-sm mt-1">Le mot de passe est requis</p>
-            } @if (passwordControl.errors?.['minlength'] &&
-            passwordControl.touched) {
-            <p class="text-red-500 text-sm mt-1">
-              Le mot de passe doit contenir au moins 6 caractères
-            </p>
-            }
-          </div>
-
-          <button
-            type="submit"
-            [disabled]="signalForm.invalid"
-            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
-          >
-            S'inscrire (Signal)
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   `,
