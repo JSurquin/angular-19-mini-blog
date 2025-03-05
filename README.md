@@ -73,6 +73,57 @@ src/
 └── styles/           # Styles globaux
 ```
 
+### Guide Pas à Pas pour Recréer le Blog
+
+1. **Initialisation du Projet**
+
+   ```bash
+   # Installation d'Angular CLI
+   npm install -g @angular/cli@latest
+
+   # Création du projet
+   ng new blog-pedagogique --style=scss --routing=true --standalone=true
+   ```
+
+2. **Configuration de l'Architecture**
+
+   - Mise en place de la structure des dossiers (core, features, shared)
+   - Configuration des alias dans tsconfig.json
+   - Installation et configuration de Tailwind CSS
+
+3. **Mise en Place des Composants de Base**
+
+   - Création du HeaderComponent
+   - Configuration du système de notification
+   - Mise en place du layout principal dans AppComponent
+
+4. **Implémentation de l'Authentification**
+
+   - Création du AuthService
+   - Implémentation des composants Login et Register
+   - Mise en place du AuthGuard et AuthInterceptor
+
+5. **Gestion des Articles**
+
+   - Création du ArticleService avec JSONPlaceholder
+   - Implémentation de la liste des articles (Observable + Signal)
+   - Création du composant de détail d'article
+   - Ajout du formulaire de création d'article
+
+6. **Optimisations et Améliorations**
+
+   - Mise en place du lazy loading
+   - Implémentation des animations
+   - Ajout des validations de formulaire
+   - Configuration des notifications système
+
+7. **Tests et Documentation**
+   - Écriture des tests unitaires
+   - Documentation du code en français
+   - Mise en place des exemples comparatifs (Signals vs Observables)
+
+Chaque étape est documentée en détail dans le code source avec des commentaires en français pour faciliter l'apprentissage.
+
 ---
 
 ## English Version
